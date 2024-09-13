@@ -4,71 +4,35 @@ namespace Bizarg\Pagination;
 
 use Illuminate\Http\Request;
 
-/**
- * Class Pagination
- * @package Bizarg\Pagination
- */
 class Pagination
 {
-    /**
-     * @var int
-     */
     public const DEFAULT_NUMBER = 1;
-    /**
-     * @var int
-     */
     public const DEFAULT_SIZE = 10;
 
-    /**
-     * @var int
-     */
-    private $number = 1;
+    private $number;
+    private $size;
 
-    /**
-     * @var int
-     */
-    private $size = 10;
-
-    /**
-     * Pagination constructor.
-     *
-     * @param int $number
-     * @param int $size
-     */
     public function __construct(int $number = self::DEFAULT_NUMBER, int $size = self::DEFAULT_SIZE)
     {
-        $this->number = $number ?: $this->number;
-        $this->size = $size ?: $this->size;
+        $this->number = $number;
+        $this->size = $size;
     }
 
-    /**
-     * @return int
-     */
-    public function page()
+    public function page(): int
     {
         return $this->number;
     }
 
-    /**
-     * @return int
-     */
-    public function offset()
+    public function offset(): int
     {
         return $this->size * ($this->number - 1);
     }
 
-    /**
-     * @return int
-     */
-    public function limit()
+    public function limit(): int
     {
         return $this->size;
     }
 
-    /**
-     * @param Request $request
-     * @return self
-     */
     public static function fromRequest(Request $request): self
     {
         return new static(self::getPageNumberFromRequest($request), self::getPerPageFromRequest($request));
