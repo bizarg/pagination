@@ -33,7 +33,7 @@ class Pagination
         return $this->size;
     }
 
-    public static function fromRequest(Request $request): self
+    public static function fromRequest(Request $request): static
     {
         return new static(self::getPageNumberFromRequest($request), self::getPerPageFromRequest($request));
     }
